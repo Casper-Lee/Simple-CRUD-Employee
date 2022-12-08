@@ -1,17 +1,24 @@
 import { Router } from "express";
+import {
+  createEmployee,
+  getEmployees,
+  getSpecificEmployee,
+  updateEmployee,
+  deleteEmployee,
+} from "../controllers/employee";
 
-import { createEmployee, getEmployees, getSpecificEmployee ,updateEmployee, deleteEmployee } from "../controllers/employee";
+import { createOrUpdateEmployee } from "../middleware/validation";
 
-const router = Router()
+const router = Router();
 
-router.post('/', createEmployee) //add
+router.post("/", createOrUpdateEmployee ,createEmployee); //add
 
-router.get('/', getEmployees)//get
+router.get("/", getEmployees); //get
 
-router.get('/:id', getSpecificEmployee) //get
+router.get("/:id", getSpecificEmployee); //get
 
-router.put('/:id', updateEmployee) //update
+router.put("/:id", createOrUpdateEmployee ,updateEmployee); //update
 
-router.delete('/:id', deleteEmployee) //delete
+router.delete("/:id", deleteEmployee); //delete
 
-export default router
+export default router;

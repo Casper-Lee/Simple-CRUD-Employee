@@ -10,9 +10,7 @@ const createEmployee = (req, res, next) => {
     const department = req.body.department;
     const newEmployee = new employee_1.Employee(Math.random().toString(), name, salary, department);
     EMPLOYEES.push(newEmployee);
-    res
-        .status(201)
-        .json({ message: "created employee", createdEmployee: newEmployee });
+    res.status(200).json(newEmployee);
 };
 exports.createEmployee = createEmployee;
 //Get All
@@ -25,12 +23,11 @@ const getSpecificEmployee = (req, res, nexct) => {
     const employeeId = req.params.id;
     const employeeIndex = EMPLOYEES.findIndex((employee) => employee.id === employeeId);
     if (employeeIndex < 0) {
-        throw new Error("Could not find employee!");
+        res.status(404).json({
+            message: "Employee not found!",
+        });
     }
-    res.json({
-        message: "Found Employee!",
-        foundEmployee: EMPLOYEES[employeeIndex],
-    });
+    res.json(EMPLOYEES[employeeIndex]);
 };
 exports.getSpecificEmployee = getSpecificEmployee;
 //Update
@@ -42,10 +39,19 @@ const updateEmployee = (req, res, next) => {
         .department;
     const employeeIndex = EMPLOYEES.findIndex((employee) => employee.id === employeeId);
     if (employeeIndex < 0) {
-        throw new Error("Could not find employee!");
+        res.status(404).json({
+            message: "Employee not found!",
+        });
     }
+    const oldEmployeeDataObj = EMPLOYEES[employeeIndex];
+    const oldEmployeeData = JSON.stringify(oldEmployeeDataObj);
     EMPLOYEES[employeeIndex] = new employee_1.Employee(EMPLOYEES[employeeIndex].id, updatedEmployeeName, updatedEmployeeSalary, updatedEmployeeDepartment);
-    res.json({ message: "Updated!", updateEmployee: EMPLOYEES[employeeIndex] });
+    const newEmployeeDataObj = EMPLOYEES[employeeIndex];
+    const newEmployeeData = JSON.stringify(newEmployeeDataObj);
+    if (oldEmployeeData === newEmployeeData) {
+        res.status(304).json();
+    }
+    res.json(EMPLOYEES[employeeIndex]);
 };
 exports.updateEmployee = updateEmployee;
 //Delete
@@ -53,9 +59,13 @@ const deleteEmployee = (req, res, next) => {
     const employeeId = req.params.id;
     const employeeIndex = EMPLOYEES.findIndex((employee) => employee.id === employeeId);
     if (employeeIndex < 0) {
-        throw new Error("Could not find employee!");
+        res.status(404).json({
+            message: "Employee not found!",
+        });
     }
-    EMPLOYEES.splice(employeeIndex, 1);
-    res.json({ message: "Employee Deleted!" });
+    else {
+        EMPLOYEES.splice(employeeIndex, 1);
+    }
+    res.status(204).json();
 };
 exports.deleteEmployee = deleteEmployee;
