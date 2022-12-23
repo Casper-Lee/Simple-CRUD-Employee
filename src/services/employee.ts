@@ -10,12 +10,20 @@ export const createEmployeeData = async (name: string, salary: number, departmen
 }
 
 export const getAllEmployeeData = async() => {
-    let employee = await Employee.findAll()
+    let employee = await Employee.findAll({
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
     return employee
 } 
 
 export const getEmployeeById = async(id: string) => {
-    let employee = await Employee.findByPk(id)
+    let employee = await Employee.findByPk(id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
     return employee
 }
 

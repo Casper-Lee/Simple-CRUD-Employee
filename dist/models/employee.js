@@ -8,7 +8,7 @@ exports.sequelize = new Sequelize({
     username: process.env.USER_NAME,
     password: process.env.PASS_WORD,
     database: process.env.DATA_BASE,
-    host: process.env.HOST,
+    host: "emp_api_db",
     dialect: "postgres"
 });
 class Employee extends Model {

@@ -12,12 +12,20 @@ const createEmployeeData = async (name, salary, department) => {
 };
 exports.createEmployeeData = createEmployeeData;
 const getAllEmployeeData = async () => {
-    let employee = await employee_1.Employee.findAll();
+    let employee = await employee_1.Employee.findAll({
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    });
     return employee;
 };
 exports.getAllEmployeeData = getAllEmployeeData;
 const getEmployeeById = async (id) => {
-    let employee = await employee_1.Employee.findByPk(id);
+    let employee = await employee_1.Employee.findByPk(id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    });
     return employee;
 };
 exports.getEmployeeById = getEmployeeById;
