@@ -11,7 +11,7 @@ import { createOrUpdateEmployee } from "../middleware/validation";
 
 const router = Router();
 
-router.post("/", createOrUpdateEmployee ,createEmployee); //add
+router.post("/", createOrUpdateEmployee, createEmployee); //add
 
 router.get("/", getEmployees); //get
 
