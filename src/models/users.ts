@@ -10,23 +10,23 @@ export const sequelize = new Sequelize({
     host: "emp_api_db", //process.env.HOST || to change back to localhost
     dialect: "postgres"
 })
-export class employees extends Model { 
+export class users extends Model { 
     // declare id: string ;
     declare name: string;
     declare salary: number;
     declare department_id: number ;
     static associate(models:any) {
       // define association here
-      employees.belongsTo(models.Department, { foreignKey: 'department_id' });
+      users.belongsTo(models.Department, { foreignKey: 'department_id' });
     }
 }
 
-employees.init({
-  name:{
+users.init({
+  username:{
     type: DataTypes.STRING,
     allowNull: false
   },
-  salary:{
+  password:{
     type: DataTypes.STRING,
     allowNull: false
   },

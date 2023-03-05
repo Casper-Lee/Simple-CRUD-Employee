@@ -1,12 +1,17 @@
 import express, {Request, Response, NextFunction} from "express";
 import { json } from 'body-parser';
+import cors from 'cors';
 const {sequelize, Employee} = require('./models/employee')
 
+import userRoutes from './routes/users'
 import employeeRoutes from './routes/employee'
 
 const app = express();
+app.use(cors())
 
 app.use(json())
+
+app.use('/auth', userRoutes )
 
 app.use('/employee', employeeRoutes)
 

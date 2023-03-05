@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.employees = exports.sequelize = void 0;
+exports.users = exports.sequelize = void 0;
 const dotenv = require('dotenv');
 dotenv.config();
 const { Sequelize, DataTypes, Model } = require('sequelize');
@@ -11,19 +11,19 @@ exports.sequelize = new Sequelize({
     host: "emp_api_db",
     dialect: "postgres"
 });
-class employees extends Model {
+class users extends Model {
     static associate(models) {
         // define association here
-        employees.belongsTo(models.Department, { foreignKey: 'department_id' });
+        users.belongsTo(models.Department, { foreignKey: 'department_id' });
     }
 }
-exports.employees = employees;
-employees.init({
-    name: {
+exports.users = users;
+users.init({
+    username: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    salary: {
+    password: {
         type: DataTypes.STRING,
         allowNull: false
     },
